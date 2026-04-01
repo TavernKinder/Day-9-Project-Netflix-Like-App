@@ -12,3 +12,5 @@ export default function StatusMessage({ loading, error, movies }) {
     }
     return null;
 } 
+
+//this looks good to me

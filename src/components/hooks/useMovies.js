@@ -1,32 +1,35 @@
 import { useState, useEffect } from "react";
 
 export default function useMovies(searchtype, searchTerm) {
-const apiKey = "e5bc556a" ;
+  const apiKey = "e5bc556a";
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-    useEffect(() => {
+  useEffect(() => {
     if (!searchTerm) {
-        setMovies([]);
-        return;
+      return;
     }
+
     setLoading(true);
     setError(null);
-    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&${searchtype}=${searchTerm}`)
+    fetch(
+      `https://www.omdbapi.com/?apikey=${apiKey}&${searchtype}=${searchTerm}`,
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.Response === "True") {
           setMovies(data.Search);
         } else {
-            setMovies([]);
-            setError(data.Error);
+          setMovies([]);
+          setError(data.Error);
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
+        //looks like u named ur error var as error not err
         setError("Failed to fetch movies");
         setLoading(false);
       });
-    }, [searchtype, searchTerm]);
-    return { movies, loading, error };
+  }, [searchtype, searchTerm]);
+  return { movies, loading, error };
 }
