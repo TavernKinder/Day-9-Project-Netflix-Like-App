@@ -26,7 +26,6 @@ export default function useMovies(searchtype, searchTerm) {
         setLoading(false);
       })
       .catch(() => {
-        //looks like u named ur error var as error not err
         setError("Failed to fetch movies");
         setLoading(false);
       });

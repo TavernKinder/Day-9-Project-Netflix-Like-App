@@ -6,23 +6,22 @@ import StatusMessage from "./components/StatusMessage";
 import "./App.css";
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState(""); //Can put in search bar
-  const [submittedTerm, setSubmittedTerm] = useState(""); //can put in search bar and submit to trigger useMovies
+  const [submittedTerm, setSubmittedTerm] = useState("");
   const { movies, loading, error } = useMovies("s", submittedTerm);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSubmittedTerm(searchTerm);
+  const handleSearchSubmit = (term) => {
+    setSubmittedTerm(term);
   };
 
   return (
     <div className="app-container">
-      <SearchBar
-        searchTerm={searchTerm}
-        onSearch={handleSearch}
-        setSearchTerm={setSearchTerm}
+      <SearchBar onSubmitSearch={handleSearchSubmit} />
+      <StatusMessage
+        term={submittedTerm}
+        loading={loading}
+        error={error}
+        movies={movies}
       />
-      <StatusMessage loading={loading} error={error} movies={movies} />
       <MovieList movies={movies} loading={loading} error={error} />
     </div>
   );

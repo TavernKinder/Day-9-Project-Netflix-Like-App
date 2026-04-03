@@ -1,6 +1,17 @@
-export default function SearchBar({ searchTerm, setSearchTerm, onSearch }) {
+import React, { useState } from "react";
+
+export default function SearchBar({ onSubmitSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSubmitSearch) {
+      onSubmitSearch(searchTerm);
+    }
+  };
+
   return (
-    <form onSubmit={onSearch}>
+    <form onSubmit={handleSubmit} className="search-bar">
       <input
         type="text"
         value={searchTerm}
